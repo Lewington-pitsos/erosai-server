@@ -15,19 +15,9 @@ CREATE TABLE links (
     id SERIAL,
     url VARCHAR(2000) NOT NULL,
     scanned BOOLEAN NOT NULL DEFAULT FALSE,
-    porn INTEGER NOT NULL DEFAULT 0,
+    porn INTEGER NOT NULL DEFAULT -1,
     CONSTRAINT unique_url UNIQUE(url),
     PRIMARY KEY(id)
-);
-
-CREATE TABLE recommendations (
-    id SERIAL,
-    user_id INTEGER,
-    link_id INTEGER,
-    PRIMARY KEY(id),
-    FOREIGN KEY (user_id) REFERENCES users(id),
-    CONSTRAINT unique_user_link_rec UNIQUE(user_id, link_id),
-    FOREIGN KEY (link_id) REFERENCES links(id)
 );
 
 CREATE TABLE visits (

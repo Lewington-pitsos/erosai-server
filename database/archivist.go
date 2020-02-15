@@ -2,6 +2,7 @@ package database
 
 import (
 	"bitbucket.org/lewington/autoroller/assist"
+	"bitbucket.org/lewington/erosai/globals"
 	"bitbucket.org/lewington/erosai/shared"
 	"github.com/jmoiron/sqlx"
 )
@@ -89,6 +90,33 @@ func (a *Archivist) AddURL(URL string) int {
 	`)
 
 	return a.ExecuteAndReturnId(stmt, URL)
+}
+
+func (a *Archivist) GetReccomendations(userID int) []shared.Link {
+	var links []shared.Link
+
+	stmt := a.MakeStmt(`
+		SELECT l.id, l.url, l.scanned, l.porn from links as l JOIN visits as v on l.id = v.link_id 
+		WHERE v.user_id = $1 AND l.porn > $2;
+	`)
+	defer stmt.Close()
+
+	err := stmt.Select(&links, userID, globals.PornCutoff)
+
+	assist.Check(err)
+
+	return links
+}
+
+func (a *Archivist) UpdateLink(link shared.Link) {
+	stmt := a.MakeStmt(`
+		UPDATE links 
+		SET scanned = $1, 
+			porn = $2
+			WHERE id = $3;
+	`)
+
+	a.execute(stmt, link.Scanned, link.Porn, link.ID)
 }
 
 func (a *Archivist) AddVisit(userID int, URLID int) int {

@@ -8,12 +8,16 @@ import (
 	"bitbucket.org/lewington/erosai/assist"
 	"bitbucket.org/lewington/erosai/database"
 	"bitbucket.org/lewington/erosai/globals"
+	"bitbucket.org/lewington/erosai/lg"
+	"bitbucket.org/lewington/erosai/scanner"
 	"bitbucket.org/lewington/erosai/shared"
 )
 
 type Server struct {
 	AuthServer
-	arch database.Archivist
+	arch        database.Archivist
+	newURLInput chan shared.Link
+	scan        *scanner.Scanner
 }
 
 func (s *Server) SpinUp() {
@@ -22,6 +26,8 @@ func (s *Server) SpinUp() {
 
 	http.HandleFunc("/register-attempt", s.register)
 	http.HandleFunc("/process-url", s.processURL)
+
+	http.HandleFunc("/get-recommendations", s.recommendations)
 
 	fmt.Println("Server spun up and listening on port: ", globals.BetServerPort)
 
@@ -32,8 +38,31 @@ func (s *Server) SpinUp() {
 	fmt.Println("Bet server closed")
 }
 
+func (s *Server) recommendations(w http.ResponseWriter, r *http.Request) {
+	fmt.Println(r.URL.Query())
+	sessionToken := r.URL.Query().Get("token")
+
+	fmt.Println(sessionToken)
+
+	userID := s.arch.GetIdForToken(sessionToken)
+
+	if userID == 0 {
+		w.WriteHeader(http.StatusNotFound)
+		return
+	}
+
+	links := s.arch.GetReccomendations(userID)
+
+	linkBytes, err := json.Marshal(links)
+	assist.Check(err)
+
+	fmt.Println(links)
+
+	w.WriteHeader(http.StatusOK)
+	w.Write(linkBytes)
+}
+
 func (s *Server) processURL(w http.ResponseWriter, r *http.Request) {
-	fmt.Println("asdasdasdasdasd")
 	reqBytes, err := assist.SafeBytes(r.Body)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
@@ -57,17 +86,24 @@ func (s *Server) processURL(w http.ResponseWriter, r *http.Request) {
 	if userID == 0 {
 		w.WriteHeader(http.StatusNotFound)
 	} else {
+		isNew := s.arch.URLIsNew(payload.URL)
+
 		linkID := s.arch.AddURL(payload.URL)
 		s.arch.AddVisit(userID, linkID)
+
+		if isNew {
+			s.newURLInput <- shared.NewUnscannedLink(linkID, payload.URL)
+		}
 	}
 
 	w.Write(s.responseBytes("Success"))
 }
-func (s *Server) register(w http.ResponseWriter, r *http.Request) {
+
+func (s *Server) extractDetails(w http.ResponseWriter, r *http.Request) (shared.Details, error) {
 	reqBytes, err := assist.SafeBytes(r.Body)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
-		return
+		return shared.Details{}, err
 	}
 
 	var reg shared.Details
@@ -75,7 +111,17 @@ func (s *Server) register(w http.ResponseWriter, r *http.Request) {
 
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
-		return
+		return shared.Details{}, err
+	}
+
+	return reg, nil
+}
+
+func (s *Server) register(w http.ResponseWriter, r *http.Request) {
+	reg, err := s.extractDetails(w, r)
+
+	if err != nil {
+		lg.L.Debug(err.Error())
 	}
 
 	fmt.Println(reg)
@@ -112,8 +158,12 @@ func (s *Server) responseBytes(message string) []byte {
 }
 
 func New() *Server {
+	newURLInput := make(chan shared.Link, 200)
+
 	return &Server{
 		*NewAuthServer(globals.BetServerPort),
 		database.NewArchivist(),
+		newURLInput,
+		scanner.New(newURLInput),
 	}
 }
