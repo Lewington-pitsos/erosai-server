@@ -67,6 +67,18 @@ func (a *Archivist) RegisterUser(reg shared.Details) int {
 	return a.ExecuteAndReturnId(stmt, reg.Username, reg.Password)
 }
 
+func (a *Archivist) URLIsNew(URL string) bool {
+	var ID int
+	stmt := a.MakeStmt(`
+		SELECT id from links WHERE url = $1;
+	`)
+	defer stmt.Close()
+
+	stmt.Get(&ID, URL)
+
+	return ID == 0
+}
+
 func (a *Archivist) AddURL(URL string) int {
 	stmt := a.SprintfStmt(`
 		INSERT INTO links (url)
