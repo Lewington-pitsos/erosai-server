@@ -1,7 +1,7 @@
 package shared
 
 import (
-	"bitbucket.org/lewington/erosai/assist"
+	"bitbucket.org/lewington/erosai-server/assist"
 	"golang.org/x/crypto/bcrypt"
 )
 

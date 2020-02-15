@@ -3,7 +3,7 @@ package scanner
 import (
 	"strings"
 
-	"bitbucket.org/lewington/erosai/assist"
+	"bitbucket.org/lewington/erosai-server/assist"
 )
 
 var keyTerms = []string{

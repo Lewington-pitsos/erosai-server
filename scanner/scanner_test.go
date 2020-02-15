@@ -5,7 +5,7 @@ import (
 	"testing"
 	"time"
 
-	"bitbucket.org/lewington/erosai/shared"
+	"bitbucket.org/lewington/erosai-server/shared"
 )
 
 func TestScanner(t *testing.T) {
@@ -17,8 +17,8 @@ func TestScanner(t *testing.T) {
 	in <- shared.Link{
 		2,
 		// "https://www.pornhub.com/",
-		// "https://www.ixxx.com/",
-		"https://www.instagram.com/caradelevingne/?hl=en",
+		"https://www.ixxx.com/",
+		// "https://www.instagram.com/caradelevingne/?hl=en",
 		false,
 		0,
 	}

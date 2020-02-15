@@ -3,8 +3,8 @@ package auth
 import (
 	"net/http"
 
-	"bitbucket.org/lewington/erosai/database"
-	"bitbucket.org/lewington/erosai/shared"
+	"bitbucket.org/lewington/erosai-server/database"
+	"bitbucket.org/lewington/erosai-server/shared"
 )
 
 // SessionAuth takes requests and determines if they hold

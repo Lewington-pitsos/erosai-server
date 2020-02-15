@@ -1,27 +1,16 @@
 package scanner
 
 import (
-	"crypto/tls"
 	"io/ioutil"
 	"net/http"
 	"regexp"
-	"time"
 
-	"bitbucket.org/lewington/erosai/database"
-	"bitbucket.org/lewington/erosai/lg"
-	"bitbucket.org/lewington/erosai/shared"
+	"bitbucket.org/lewington/erosai-server/database"
+	"bitbucket.org/lewington/erosai-server/lg"
+	"bitbucket.org/lewington/erosai-server/shared"
 )
 
 var pornCutoff = 70
-
-var client = &http.Client{
-	Timeout: time.Second * 10,
-	Transport: &http.Transport{
-		TLSClientConfig: &tls.Config{
-			InsecureSkipVerify: true,
-		},
-	},
-}
 
 type Scanner struct {
 	input      chan shared.Link

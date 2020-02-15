@@ -84,7 +84,7 @@ func (l *Lggr) keepLogging() {
 }
 
 func (l *Lggr) dirName() string {
-	return build.Default.GOPATH + "/src/bitbucket.org/lewington/erosai/log/"
+	return build.Default.GOPATH + "/src/bitbucket.org/lewington/erosai-server/log/"
 }
 
 func (l *Lggr) fileName() string {

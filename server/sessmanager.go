@@ -6,11 +6,11 @@ import (
 	"net/http"
 	"time"
 
-	"bitbucket.org/lewington/erosai/assist"
-	"bitbucket.org/lewington/erosai/auth"
-	"bitbucket.org/lewington/erosai/database"
-	"bitbucket.org/lewington/erosai/lg"
-	"bitbucket.org/lewington/erosai/shared"
+	"bitbucket.org/lewington/erosai-server/assist"
+	"bitbucket.org/lewington/erosai-server/auth"
+	"bitbucket.org/lewington/erosai-server/database"
+	"bitbucket.org/lewington/erosai-server/lg"
+	"bitbucket.org/lewington/erosai-server/shared"
 	"github.com/google/uuid"
 )
 

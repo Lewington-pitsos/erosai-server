@@ -5,12 +5,12 @@ import (
 	"fmt"
 	"net/http"
 
-	"bitbucket.org/lewington/erosai/assist"
-	"bitbucket.org/lewington/erosai/database"
-	"bitbucket.org/lewington/erosai/globals"
-	"bitbucket.org/lewington/erosai/lg"
-	"bitbucket.org/lewington/erosai/scanner"
-	"bitbucket.org/lewington/erosai/shared"
+	"bitbucket.org/lewington/erosai-server/assist"
+	"bitbucket.org/lewington/erosai-server/database"
+	"bitbucket.org/lewington/erosai-server/globals"
+	"bitbucket.org/lewington/erosai-server/lg"
+	"bitbucket.org/lewington/erosai-server/scanner"
+	"bitbucket.org/lewington/erosai-server/shared"
 )
 
 type Server struct {
