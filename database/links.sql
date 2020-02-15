@@ -26,3 +26,4 @@ CREATE TABLE visits (
 );
 
 INSERT INTO users (name, password) values ('test', 'test');
+INSERT INTO users (name, password) values ('testadmin', 'testadmin');

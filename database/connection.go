@@ -54,7 +54,7 @@ func (c *connection) Close() {
 
 // newConnection opens a connection to the adlerbot database (or throws an error) and returns a new connection instance wrapped around that connection.
 func newConnection() connection {
-	database := sqlx.MustOpen(driverName, "user=erosai dbname=links password=Erosai11!! sslmode=disable")
+	database := sqlx.MustOpen(driverName, "user=erosai dbname=erosai password=Erosai11!! sslmode=disable")
 	c := connection{
 		db: database,
 	}

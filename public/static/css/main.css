@@ -102,11 +102,6 @@ section.dismiss-reason.hidden {
   display: none
 }
 
-#alert-box-wrapper {
-  margin-top: -20px;
-}
-
-
 #alert-box {
   height: 100px;
   margin-bottom: 40px;
