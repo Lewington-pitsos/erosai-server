@@ -10,6 +10,10 @@ type Details struct {
 	Password string
 }
 
+func (d *Details) IsNull() bool {
+	return d.Username == "" && d.Password == ""
+}
+
 func (d *Details) Combination() string {
 	return d.Password + d.Username
 }

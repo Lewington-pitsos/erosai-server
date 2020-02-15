@@ -14,6 +14,7 @@ CREATE TABLE users (
 CREATE TABLE links (
     id SERIAL,
     url VARCHAR(2000) NOT NULL,
+    CONSTRAINT unique_url UNIQUE(url),
     PRIMARY KEY(id)
 );
 
@@ -23,6 +24,7 @@ CREATE TABLE visits (
     link_id INTEGER,
     PRIMARY KEY(id),
     FOREIGN KEY (user_id) REFERENCES users(id),
+    CONSTRAINT unique_user_link UNIQUE(user_id, link_id),
     FOREIGN KEY (link_id) REFERENCES links(id)
 );
 

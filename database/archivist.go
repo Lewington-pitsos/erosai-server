@@ -35,16 +35,16 @@ func (a *Archivist) DoesUserExist(reg shared.Details) bool {
 	return ID != 0
 }
 
-func (a *Archivist) UserForToken(token string) shared.Details {
-	var details shared.Details
+func (a *Archivist) GetIdForToken(token string) int {
+	var ID int
 	stmt := a.MakeStmt(`
-		SELECT name, password from users WHERE token = $1;
+		SELECT id from users WHERE token = $1;
 	`)
 	defer stmt.Close()
 
-	stmt.Get(&details, token)
+	stmt.Get(&ID, token)
 
-	return details
+	return ID
 }
 
 func (a *Archivist) SetUserToken(reg shared.Details, token string) {
@@ -65,6 +65,30 @@ func (a *Archivist) RegisterUser(reg shared.Details) int {
 	`)
 
 	return a.ExecuteAndReturnId(stmt, reg.Username, reg.Password)
+}
+
+func (a *Archivist) AddURL(URL string) int {
+	stmt := a.SprintfStmt(`
+		INSERT INTO links (url)
+		VALUES ($1)
+			ON CONFLICT ON CONSTRAINT unique_url
+			DO UPDATE SET url = $1
+			RETURNING id;
+	`)
+
+	return a.ExecuteAndReturnId(stmt, URL)
+}
+
+func (a *Archivist) AddVisit(userID int, URLID int) int {
+	stmt := a.SprintfStmt(`
+		INSERT INTO visits (user_id, link_id)
+		VALUES ($1, $2)
+			ON CONFLICT ON CONSTRAINT unique_user_link
+			DO UPDATE SET user_id = $1
+			RETURNING id;
+	`)
+
+	return a.ExecuteAndReturnId(stmt, userID, URLID)
 }
 
 func (a *Archivist) ExecuteAndReturnId(stmt *sqlx.Stmt, args ...interface{}) int {

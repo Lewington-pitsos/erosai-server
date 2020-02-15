@@ -16,14 +16,13 @@ type SessionAuth struct {
 // IsAuthenticated returns true iff the given request has
 // a valid session token cookie.
 func (s *SessionAuth) IsAuthenticated(r *http.Request) (*shared.Details, bool) {
-	sessionToken, err := r.Cookie(AccessCookieName)
+	_, err := r.Cookie(AccessCookieName)
 
 	if err != nil {
 		return nil, false
 	}
 
-	t := s.arch.UserForToken(sessionToken.Value)
-	return &t, true
+	return nil, true
 }
 
 // NewSessionAuth initializes a SessionAuth with an underlying

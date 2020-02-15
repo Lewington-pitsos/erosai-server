@@ -21,7 +21,7 @@ func (s *Server) SpinUp() {
 	http.Handle("/", http.FileServer(http.Dir("public/static/")))
 
 	http.HandleFunc("/register-attempt", s.register)
-	http.HandleFunc("/details-data", s.IfAuthorized(s.usernames))
+	http.HandleFunc("/process-url", s.processURL)
 
 	fmt.Println("Server spun up and listening on port: ", globals.BetServerPort)
 
@@ -32,6 +32,37 @@ func (s *Server) SpinUp() {
 	fmt.Println("Bet server closed")
 }
 
+func (s *Server) processURL(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("asdasdasdasdasd")
+	reqBytes, err := assist.SafeBytes(r.Body)
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+
+	var payload Payload
+	err = json.Unmarshal(reqBytes, &payload)
+
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+
+	fmt.Println(payload)
+
+	userID := s.arch.GetIdForToken(payload.Token)
+
+	fmt.Println(userID)
+
+	if userID == 0 {
+		w.WriteHeader(http.StatusNotFound)
+	} else {
+		linkID := s.arch.AddURL(payload.URL)
+		s.arch.AddVisit(userID, linkID)
+	}
+
+	w.Write(s.responseBytes("Success"))
+}
 func (s *Server) register(w http.ResponseWriter, r *http.Request) {
 	reqBytes, err := assist.SafeBytes(r.Body)
 	if err != nil {
@@ -78,10 +109,6 @@ func (s *Server) responseBytes(message string) []byte {
 	})
 	assist.Check(err)
 	return b
-}
-
-func (s *Server) usernames(w http.ResponseWriter, r *http.Request) {
-
 }
 
 func New() *Server {

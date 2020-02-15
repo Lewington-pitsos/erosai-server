@@ -1,6 +1,7 @@
 package server
 
 import (
+	"fmt"
 	"net/http"
 )
 
@@ -24,6 +25,7 @@ func (s *AuthServer) SetAuthEndpoints() {
 func (s *AuthServer) IfAuthorized(handler func(http.ResponseWriter, *http.Request)) func(http.ResponseWriter, *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
 		_, isAuthenticated := s.IsAuthenticated(r)
+		fmt.Println(r)
 		if isAuthenticated {
 			handler(w, r)
 		} else {
