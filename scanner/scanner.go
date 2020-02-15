@@ -2,7 +2,6 @@ package scanner
 
 import (
 	"crypto/tls"
-	"fmt"
 	"io/ioutil"
 	"net/http"
 	"regexp"
@@ -10,7 +9,6 @@ import (
 
 	"bitbucket.org/lewington/erosai/lg"
 	"bitbucket.org/lewington/erosai/shared"
-	"github.com/PuerkitoBio/goquery"
 )
 
 var client = &http.Client{
@@ -24,7 +22,8 @@ var client = &http.Client{
 
 type Scanner struct {
 	input chan shared.Link
-	regex *regexp.Regexp
+
+	inspectors []inspector
 }
 
 func (s *Scanner) work() {
@@ -36,17 +35,18 @@ func (s *Scanner) scanLnks() {
 		request, err := http.NewRequest("GET", link.URL, nil)
 		if err != nil {
 			lg.L.Debug("error creating request for URL %v", link.URL)
+			break
 		}
 		resp, err := client.Do(request)
 		if err != nil {
 			lg.L.Debug("error requesting URL %v", link.URL)
+			break
 		}
 		s.containsPorn(resp)
 	}
 }
 
 func (s *Scanner) containsPorn(resp *http.Response) (int, error) {
-
 	responseBytes, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return 0, err
@@ -58,31 +58,24 @@ func (s *Scanner) containsPorn(resp *http.Response) (int, error) {
 		return 0, err
 	}
 
-	links := s.regex.FindAllString(responseString, -1)
-
-	for _, link := range links {
-		fmt.Println(link)
-	}
-
-	return 0, nil
-}
-
-func (s *Scanner) extractImageLinksFunc(links []string) func(int, *goquery.Selection) bool {
-	return func(index int, imageNode *goquery.Selection) bool {
-		link, exists := imageNode.Attr("src")
-
-		if exists {
-			links[index] = link
+	var score int
+	for _, inspector := range s.inspectors {
+		score = inspector.score(responseString)
+		if score > 70 {
+			return score, nil
 		}
-
-		return true
 	}
+
+	return score, nil
 }
 
 func New(input chan shared.Link) *Scanner {
 	s := &Scanner{
 		input,
-		regexp.MustCompile(`http\S{5,250}.(jpg|jpeg|png)`),
+		[]inspector{
+			&wordInspector{},
+			newLinkInspector(regexp.MustCompile(`http\S{5,250}.(jpg|jpeg|png)`)),
+		},
 	}
 
 	s.work()

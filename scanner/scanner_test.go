@@ -17,7 +17,8 @@ func TestScanner(t *testing.T) {
 	in <- shared.Link{
 		2,
 		// "https://www.pornhub.com/",
-		"https://www.ixxx.com/",
+		// "https://www.ixxx.com/",
+		"https://www.instagram.com/caradelevingne/?hl=en",
 		false,
 		0,
 	}
