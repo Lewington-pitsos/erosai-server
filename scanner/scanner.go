@@ -88,7 +88,7 @@ func New(input chan shared.Link) *Scanner {
 		input,
 		database.NewArchivist(),
 		[]inspector{
-			&wordInspector{},
+			// &wordInspector{},
 			newLinkInspector(regexp.MustCompile(`http\S{5,250}.(jpg|jpeg|png)`)),
 		},
 	}

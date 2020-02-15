@@ -18,8 +18,6 @@ window.onload = function() {
 
             } else if (this.status == 400) {
                 alert("Oops... something went mildly wrong, maybe refresh and try again.")
-            } else {
-                alert("OOPS! Something went hideously wrong, contact an admin.")
             }
         }
     };
