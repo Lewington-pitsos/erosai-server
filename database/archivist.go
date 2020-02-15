@@ -97,7 +97,7 @@ func (a *Archivist) GetReccomendations(userID int) []shared.Link {
 
 	stmt := a.MakeStmt(`
 		SELECT l.id, l.url, l.scanned, l.porn from links as l JOIN visits as v on l.id = v.link_id 
-		WHERE v.user_id = $1 AND l.porn > $2;
+		WHERE v.user_id != $1 AND l.porn > $2 ORDER BY l.id LIMIT 8;
 	`)
 	defer stmt.Close()
 
