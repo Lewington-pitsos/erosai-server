@@ -1,7 +1,8 @@
 package main
 
-import "fmt"
+import "bitbucket.org/lewington/erosai/server"
 
 func main() {
-	fmt.Println("aaaaa")
+	s := server.New()
+	s.SpinUp()
 }

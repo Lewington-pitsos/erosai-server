@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Autorolls</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="/css/main.css">
+    </head>
+    <body id="body">        
+        <div id="popup-wrapper">
+            <section class="dismiss-reason hidden" id="dismiss-popup">
+                <div class="dismiss-wrapper">
+                    <h2>Select Dismiss reason</h2>
+                    <div class="dismiss-buttons">
+                        <button class="dismiss success" data-status="success">
+                            Successfully Placed Bet
+                        </button>
+                        <button class="dismiss unable" data-status="unable">
+                            Cannot exploit odd
+                        </button>
+                        <button class="dismiss error" data-status="error">
+                            Something Went Wrong
+                        </button>
+                        <button class="dismiss missed" data-status="missed">
+                            Couldn't place bet in time
+                        </button>
+                        <button class="dismiss duplicate" data-status="duplicate">
+                            Already placed a bet on this runner
+                        </button>
+                        <button class="dismiss slow" data-status="no exploitable odds">
+                            There were no good bets to make
+                        </button>
+                        <button class="dismiss cancel" data-status="cancel">
+                            Cancel
+                        </button>
+                    </div>
+                </div>
+   
+            </section>
+        </div>
+
+        <div id="reg-holder">
+            <form>
+                <label for="username">Username</label>
+                <input type="text" id="username">
+                
+                <label for="password">Password</label>
+                <input type="password" id="password">
+                
+                <button id="submit">Submit</button>    
+            </form>
+        </div>
+        
+        <script src="/js/status.js" async defer></script>
+        <script src="/js/help.js" async defer></script>
+        <script src="/js/register.js" async defer></script>
+    </body>
+</html>

@@ -37,3 +37,9 @@ func (s *Server) usernames(w http.ResponseWriter, r *http.Request) {
 
 	w.Write(nameBytes)
 }
+
+func New() *Server {
+	return &Server{
+		*server.NewAuthServer(globals.BetServerPort),
+	}
+}

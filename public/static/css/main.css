@@ -1,0 +1,270 @@
+body {
+  margin: 0;
+}
+
+table.paleBlueRows {
+  font-family: Tahoma, Geneva, sans-serif;
+  border: 1px solid #FFFFFF;
+  width: 350px;
+  height: 200px;
+  text-align: center;
+  border-collapse: collapse;
+}
+table.paleBlueRows td, table.paleBlueRows th {
+  border: 1px solid #FFFFFF;
+  padding: 10px 10px;
+}
+table.paleBlueRows tbody td {
+  font-size: 13px;
+}
+table.paleBlueRows tr:nth-child(even) td {
+  background: #D0E4F5;
+}
+table.paleBlueRows tr:nth-child(even).highlight td {
+  background: #f77238;
+}
+table.paleBlueRows tr:nth-child(odd) td {
+  background: #eee;
+}
+table.paleBlueRows tr:nth-child(odd).highlight td {
+  background: #e5b39e;
+}
+table.paleBlueRows thead {
+  background: #0B6FA4;
+  border-bottom: 5px solid #eee;
+}
+table.paleBlueRows thead th {
+  font-size: 13px;
+  font-weight: bold;
+  color: #FFFFFF;
+  text-align: center;
+  border-left: 2px solid #FFFFFF;
+}
+table.paleBlueRows thead th:first-child {
+  border-left: none;
+}
+
+table.paleBlueRows tfoot {
+  font-size: 14px;
+  font-weight: bold;
+  color: #333333;
+  background: #D0E4F5;
+  border-top: 3px solid #444444;
+}
+table.paleBlueRows tfoot td {
+  font-size: 14px;
+}
+
+table.paleBlueRows tbody td.dismiss {
+  background: salmon;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+
+th.bookie-option {
+  min-width: 90px;
+}
+
+div.option-stake {
+  padding-bottom: 10px;
+}
+
+
+
+
+
+
+
+
+section.dismiss-reason {
+  position: fixed;
+  margin: auto;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+}
+
+section.dismiss-reason .dismiss-wrapper {
+  padding: 30px;
+  background-color: #ececec;
+  width: 700px;
+  height: 600px;
+}
+
+section.dismiss-reason.hidden {
+  display: none;
+}
+
+.hidden {
+  display: none
+}
+
+#alert-box-wrapper {
+  margin-top: -20px;
+}
+
+
+#alert-box {
+  height: 100px;
+  margin-bottom: 40px;
+  position: fixed;
+  width: 100%;
+}
+
+#alert-box {
+  padding: 20px;
+}
+
+#alert-box.success {
+  background-color: #a6d8b1
+}
+
+#alert-box.error {
+  background-color: #d8a7a6
+}
+
+button.dismiss {
+  padding: 30px;
+  margin: 20px;
+  width: 200px;
+  cursor: pointer;
+}
+
+button.error {
+  background: #f46e42;
+  border: none;
+}
+
+button.error:hover {
+  background: #cc5b37;
+  border: none;
+}
+
+button.unable {
+  background: #ceb2a7;
+  border: none;
+}
+
+button.unable:hover {
+  background: #bfa59a;
+  border: none;
+}
+
+button.missed {
+  background: #ddaf3b;
+  border: none;
+}
+
+button.missed:hover {
+  background: #cca137;
+  border: none;
+}
+
+button.duplicate {
+  background: #a23ae0;
+  border: none;
+}
+
+button.duplicate:hover {
+  background: #8f33c6;
+  border: none;
+}
+
+button.slow {
+  background: #db364c;
+  border: none;
+}
+
+button.slow:hover {
+  background: #c42f43;
+  border: none;
+}
+
+
+button.success {
+  background: #38c42f;
+  border: none;
+}
+
+button.success:hover {
+  background: #32af2a;
+  border: none;
+}
+
+
+
+
+
+
+input.confirm-balance:hover {
+  cursor: pointer;
+}
+
+input.confirm {
+  width: 80px;
+  padding: 10px 5px;
+}
+
+select.confirm {
+  width: 160px;
+  padding: 20px 5px;
+}
+
+select.confirm > option {
+  font-size: 30px;
+}
+
+#stats-table td {
+  padding: 0 40px;
+}
+
+.history-panel {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 60px;
+
+}
+
+.picker-wrapper {
+  background: #eee;
+  padding: 40px 160px 40px 40px;
+}
+
+#bet-refresh {
+  padding: 20px;
+  cursor: pointer;
+}
+
+
+
+
+
+.nav {
+  padding: 120px 20px 20px 20px;
+  margin: 20px;
+}
+
+.nav ul {
+  display: flex;
+  list-style: none;
+}
+
+.nav ul li{
+  padding: 20px;
+}
+
+#omnisave {
+  padding: 40px;
+  background: #D0E4F5;
+  position: fixed;
+  top: 50%;
+  right: 4em;
+}
+
+#omnisave button {
+  padding: 10px;
+  cursor: pointer;
+}
