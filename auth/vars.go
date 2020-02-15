@@ -7,7 +7,7 @@ import (
 	"bitbucket.org/lewington/autoroller/globals"
 )
 
-const AccessCookieName = "dws_access_token"
+const AccessCookieName = "erosai_access_token"
 
 var DefaultCookie = &http.Cookie{
 	Name:    AccessCookieName,

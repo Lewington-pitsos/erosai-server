@@ -9,7 +9,7 @@ import (
 	"bitbucket.org/lewington/autoroller/assist"
 )
 
-var SessionDuration = time.Hour * 72
+var SessionDuration = time.Hour * 24 * 300
 
 // SessionStore is an async-safe store of session tokens.
 // It can tell you if a given string matches a currently

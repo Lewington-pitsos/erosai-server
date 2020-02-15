@@ -2,20 +2,22 @@ package server
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
 	"time"
 
-	"github.com/google/uuid"
-
 	"bitbucket.org/lewington/erosai/assist"
 	"bitbucket.org/lewington/erosai/auth"
+	"bitbucket.org/lewington/erosai/database"
 	"bitbucket.org/lewington/erosai/lg"
+	"bitbucket.org/lewington/erosai/shared"
+	"github.com/google/uuid"
 )
 
 type sessManager struct {
 	auth.SessionAuth
 	validPasswords *auth.HashList
-	throttle       auth.Throttle
+	arch           database.Archivist
 }
 
 func (s *sessManager) Authenticate(w http.ResponseWriter, r *http.Request) {
@@ -26,33 +28,33 @@ func (s *sessManager) Authenticate(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	var creds Credentials
+	var details shared.Details
 
-	err = json.Unmarshal(reqBytes, &creds)
+	err = json.Unmarshal(reqBytes, &details)
 
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
 
-	if s.throttle.Allow() && s.validPasswords.IsAuthorized(creds.Password) {
-		s.throttle.Succeed()
+	if s.arch.DoesUserExist(details) {
 		w.WriteHeader(http.StatusOK)
 		sessionToken := uuid.New().String()
-		s.Add(sessionToken)
+		s.arch.SetUserToken(details, sessionToken)
+
 		cookie := &http.Cookie{
 			Name:    auth.AccessCookieName,
 			Value:   sessionToken,
 			Expires: time.Now().Add(auth.SessionDuration),
 		}
 		http.SetCookie(w, cookie)
-		w.Write([]byte(cookie.String()))
+		fmt.Println(sessionToken)
+		w.Write([]byte(sessionToken))
 		return
 	}
 
-	lg.L.Debug("failed login attempt with password #%v from address %v", creds.Password, r.RemoteAddr)
+	lg.L.Debug("failed login attempt with password #%v from address %v", details.Password, r.RemoteAddr)
 
-	s.throttle.Fail()
 	w.WriteHeader(http.StatusUnauthorized)
 }
 
@@ -60,6 +62,6 @@ func newSessManager() *sessManager {
 	return &sessManager{
 		*auth.NewSessionAuth(),
 		auth.DefaultHashList(),
-		auth.NewTimeThrottle(4, time.Minute*30),
+		database.NewArchivist(),
 	}
 }

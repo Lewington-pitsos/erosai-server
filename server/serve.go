@@ -5,15 +5,14 @@ import (
 	"fmt"
 	"net/http"
 
-	"bitbucket.org/lewington/betback/globals"
-	"bitbucket.org/lewington/betback/serve/server"
 	"bitbucket.org/lewington/erosai/assist"
 	"bitbucket.org/lewington/erosai/database"
+	"bitbucket.org/lewington/erosai/globals"
 	"bitbucket.org/lewington/erosai/shared"
 )
 
 type Server struct {
-	server.AuthServer
+	AuthServer
 	arch database.Archivist
 }
 
@@ -40,7 +39,7 @@ func (s *Server) register(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	var reg shared.Registration
+	var reg shared.Details
 	err = json.Unmarshal(reqBytes, &reg)
 
 	if err != nil {
@@ -82,17 +81,12 @@ func (s *Server) responseBytes(message string) []byte {
 }
 
 func (s *Server) usernames(w http.ResponseWriter, r *http.Request) {
-	names := map[globals.BookieName]map[string]string{}
 
-	nameBytes, err := json.Marshal(names)
-	assist.Check(err)
-
-	w.Write(nameBytes)
 }
 
 func New() *Server {
 	return &Server{
-		*server.NewAuthServer(globals.BetServerPort),
+		*NewAuthServer(globals.BetServerPort),
 		database.NewArchivist(),
 	}
 }

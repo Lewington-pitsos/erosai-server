@@ -18,13 +18,13 @@ func (s *AuthServer) Login(w http.ResponseWriter, r *http.Request) {
 }
 
 func (s *AuthServer) SetAuthEndpoints() {
-	http.HandleFunc("/login", s.Login)
 	http.HandleFunc("/login-attempt", s.Authenticate)
 }
 
 func (s *AuthServer) IfAuthorized(handler func(http.ResponseWriter, *http.Request)) func(http.ResponseWriter, *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
-		if s.IsAuthenticated(r) {
+		_, isAuthenticated := s.IsAuthenticated(r)
+		if isAuthenticated {
 			handler(w, r)
 		} else {
 			w.WriteHeader(http.StatusUnauthorized)

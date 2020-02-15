@@ -23,7 +23,7 @@ func (a *Archivist) getId(row *sqlx.Row) int {
 	return id
 }
 
-func (a *Archivist) DoesUserExist(reg shared.Registration) bool {
+func (a *Archivist) DoesUserExist(reg shared.Details) bool {
 	var ID int
 	stmt := a.MakeStmt(`
 		SELECT id from users WHERE name = $1;
@@ -35,7 +35,27 @@ func (a *Archivist) DoesUserExist(reg shared.Registration) bool {
 	return ID != 0
 }
 
-func (a *Archivist) RegisterUser(reg shared.Registration) int {
+func (a *Archivist) UserForToken(token string) shared.Details {
+	var details shared.Details
+	stmt := a.MakeStmt(`
+		SELECT name, password from users WHERE token = $1;
+	`)
+	defer stmt.Close()
+
+	stmt.Get(&details, token)
+
+	return details
+}
+
+func (a *Archivist) SetUserToken(reg shared.Details, token string) {
+	stmt := a.MakeStmt(`
+		UPDATE users set token = $1 WHERE name = $2;
+	`)
+
+	a.execute(stmt, token, reg.Username)
+}
+
+func (a *Archivist) RegisterUser(reg shared.Details) int {
 	stmt := a.SprintfStmt(`
 		INSERT INTO users (name, password)
 		VALUES ($1, $2)

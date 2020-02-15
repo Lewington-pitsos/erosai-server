@@ -6,6 +6,7 @@ CREATE TABLE users (
     id SERIAL,
     name VARCHAR(100) NOT NULL,
     password VARCHAR(100) NOT NULL,
+    token VARCHAR(100) NOT NULL,
     CONSTRAINT unique_name UNIQUE(name),
     PRIMARY KEY(id)
 );
@@ -25,5 +26,5 @@ CREATE TABLE visits (
     FOREIGN KEY (link_id) REFERENCES links(id)
 );
 
-INSERT INTO users (name, password) values ('test', 'test');
-INSERT INTO users (name, password) values ('testadmin', 'testadmin');
+INSERT INTO users (name, password) values ('test', 'test', 'testghash');
+INSERT INTO users (name, password) values ('testadmin', 'testadmin', 'testadminhash');
