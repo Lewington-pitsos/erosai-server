@@ -96,12 +96,12 @@ func (a *Archivist) GetReccomendations(userID int) []shared.Link {
 	var links []shared.Link
 
 	stmt := a.MakeStmt(`
-		SELECT l.id, l.url, l.scanned, l.porn from links as l JOIN visits as v on l.id = v.link_id 
-		WHERE v.user_id != $1 AND l.porn > $2 ORDER BY l.id LIMIT 8;
+		SELECT l.id, l.url, l.scanned, l.nsfw from links as l JOIN visits as v on l.id = v.link_id
+		WHERE v.user_id != $1 AND l.nsfw > $2 ORDER BY l.id LIMIT 8;
 	`)
 	defer stmt.Close()
 
-	err := stmt.Select(&links, userID, globals.PornCutoff)
+	err := stmt.Select(&links, userID, globals.NsfwCutoff)
 
 	assist.Check(err)
 
@@ -112,11 +112,11 @@ func (a *Archivist) UpdateLink(link shared.Link) {
 	stmt := a.MakeStmt(`
 		UPDATE links 
 		SET scanned = $1, 
-			porn = $2
+			nsfw = $2
 			WHERE id = $3;
 	`)
 
-	a.execute(stmt, link.Scanned, link.Porn, link.ID)
+	a.execute(stmt, link.Scanned, link.Nsfw, link.ID)
 }
 
 func (a *Archivist) AddVisit(userID int, URLID int) int {

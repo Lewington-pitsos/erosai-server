@@ -57,7 +57,7 @@ func (l *linkInspector) score(page string) int {
 			if tempScore > score {
 				score = tempScore
 			}
-			if score > globals.PornCutoff {
+			if score > globals.NsfwCutoff {
 				break
 			}
 		}

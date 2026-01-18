@@ -10,7 +10,7 @@ import (
 	"bitbucket.org/lewington/erosai-server/shared"
 )
 
-var pornCutoff = 70
+var nsfwCutoff = 70
 
 type Scanner struct {
 	input      chan shared.Link
@@ -36,7 +36,7 @@ func (s *Scanner) scanLnks() {
 			continue
 		}
 
-		score, err := s.pornScore(resp)
+		score, err := s.nsfwScore(resp)
 
 		if err != nil {
 			lg.L.Debug("error scoring URL %v", link.URL)
@@ -44,12 +44,12 @@ func (s *Scanner) scanLnks() {
 		}
 
 		link.Scanned = true
-		link.Porn = score
+		link.Nsfw = score
 		s.arch.UpdateLink(link)
 	}
 }
 
-func (s *Scanner) pornScore(resp *http.Response) (int, error) {
+func (s *Scanner) nsfwScore(resp *http.Response) (int, error) {
 	responseBytes, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return 0, err
@@ -64,7 +64,7 @@ func (s *Scanner) pornScore(resp *http.Response) (int, error) {
 	var score int
 	for _, inspector := range s.inspectors {
 		score = inspector.score(responseString)
-		if score > pornCutoff {
+		if score > nsfwCutoff {
 			return score, nil
 		}
 	}

@@ -9,7 +9,7 @@ window.onload = function() {
 
                 var allElements = ""
                 resp.forEach(function(element) {
-                    allElements += `<li class="recommendation"><p>Porn Confidence: ${element.Porn}</p><a href="${element.URL}">${element.URL}</a></li>`
+                    allElements += `<li class="recommendation"><p>NSFW Confidence: ${element.Nsfw}</p><a href="${element.URL}">${element.URL}</a></li>`
                     console.log(element);
                 });
 

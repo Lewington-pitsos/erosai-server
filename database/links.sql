@@ -15,7 +15,7 @@ CREATE TABLE links (
     id SERIAL,
     url VARCHAR(2000) NOT NULL,
     scanned BOOLEAN NOT NULL DEFAULT FALSE,
-    porn INTEGER NOT NULL DEFAULT -1,
+    nsfw INTEGER NOT NULL DEFAULT -1,
     CONSTRAINT unique_url UNIQUE(url),
     PRIMARY KEY(id)
 );

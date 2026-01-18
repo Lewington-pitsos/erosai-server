@@ -34,7 +34,7 @@ var keyTerms = []string{
 	"anal fuck",
 	"busty",
 	"sexy",
-	"porn",
+	"nsfw",
 	"xxx",
 }
 

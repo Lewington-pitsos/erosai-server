@@ -4,7 +4,7 @@ type Link struct {
 	ID      int
 	URL     string
 	Scanned bool
-	Porn    int
+	Nsfw    int
 }
 
 func NewUnscannedLink(ID int, URL string) Link {
