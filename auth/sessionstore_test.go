@@ -3,8 +3,8 @@ package auth
 import (
 	"testing"
 
-	"bitbucket.org/lewington/autoroller/assist"
-	"bitbucket.org/lewington/autoroller/testhelp"
+	"bitbucket.org/lewington/erosai-server/assist"
+	"bitbucket.org/lewington/erosai-server/testhelp"
 )
 
 func TestSessionStore(t *testing.T) {

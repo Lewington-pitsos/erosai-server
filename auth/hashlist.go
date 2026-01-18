@@ -1,8 +1,8 @@
 package auth
 
 import (
-	"bitbucket.org/lewington/autoroller/assist"
-	"bitbucket.org/lewington/autoroller/globals"
+	"bitbucket.org/lewington/erosai-server/assist"
+	"bitbucket.org/lewington/erosai-server/globals"
 	"golang.org/x/crypto/bcrypt"
 )
 

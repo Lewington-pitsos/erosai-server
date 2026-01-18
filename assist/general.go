@@ -15,8 +15,8 @@ import (
 
 	"github.com/PuerkitoBio/goquery"
 
-	"bitbucket.org/lewington/autoroller/globals"
-	"bitbucket.org/lewington/autoroller/lg"
+	"bitbucket.org/lewington/erosai-server/globals"
+	"bitbucket.org/lewington/erosai-server/lg"
 )
 
 var AEST = time.FixedZone("AEST", -60*60*4)
@@ -305,7 +305,7 @@ func RecordTime(startTime time.Time, action string) {
 }
 
 func PathToPackage() string {
-	return os.Getenv("GOPATH") + "/src/bitbucket.org/lewington/autoroller"
+	return os.Getenv("GOPATH") + "/src/bitbucket.org/lewington/erosai-server"
 }
 
 func PathToAsset() string {

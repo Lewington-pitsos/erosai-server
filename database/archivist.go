@@ -1,7 +1,7 @@
 package database
 
 import (
-	"bitbucket.org/lewington/autoroller/assist"
+	"bitbucket.org/lewington/erosai-server/assist"
 	"bitbucket.org/lewington/erosai-server/globals"
 	"bitbucket.org/lewington/erosai-server/shared"
 	"github.com/jmoiron/sqlx"

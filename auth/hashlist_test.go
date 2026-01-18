@@ -3,9 +3,9 @@ package auth
 import (
 	"testing"
 
-	"bitbucket.org/lewington/autoroller/globals"
+	"bitbucket.org/lewington/erosai-server/globals"
 
-	"bitbucket.org/lewington/autoroller/testhelp"
+	"bitbucket.org/lewington/erosai-server/testhelp"
 )
 
 func TestHashList(t *testing.T) {

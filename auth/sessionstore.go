@@ -4,9 +4,9 @@ import (
 	"sync"
 	"time"
 
-	"bitbucket.org/lewington/autoroller/globals"
+	"bitbucket.org/lewington/erosai-server/globals"
 
-	"bitbucket.org/lewington/autoroller/assist"
+	"bitbucket.org/lewington/erosai-server/assist"
 )
 
 var SessionDuration = time.Hour * 24 * 300

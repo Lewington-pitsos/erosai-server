@@ -1,16 +1,19 @@
 package scanner
 
 import (
+	"io"
 	"net/http"
 	"os"
-	"io"
+
 	"bitbucket.org/lewington/erosai-server/globals"
 )
-type imageSaver struct {
 
-}
+type imageSaver struct{}
 
-func (s *imageSaver) save(URL string) (string ,error) {
+func (s *imageSaver) save(URL string) (string, error) {
+	// Ensure temp directory exists
+	os.MkdirAll(globals.ImageSaveDirectory, 0755)
+
 	response, err := http.Get(URL)
 
 	if err != nil {

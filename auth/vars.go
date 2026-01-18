@@ -4,7 +4,7 @@ import (
 	"net/http"
 	"time"
 
-	"bitbucket.org/lewington/autoroller/globals"
+	"bitbucket.org/lewington/erosai-server/globals"
 )
 
 const AccessCookieName = "erosai_access_token"

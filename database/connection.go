@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"sync"
 
-	"bitbucket.org/lewington/autoroller/assist"
-	"bitbucket.org/lewington/autoroller/lg"
+	"bitbucket.org/lewington/erosai-server/assist"
+	"bitbucket.org/lewington/erosai-server/lg"
 	"github.com/jmoiron/sqlx"
 
 	_ "github.com/lib/pq"

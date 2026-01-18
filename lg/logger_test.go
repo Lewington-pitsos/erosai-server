@@ -9,7 +9,7 @@ import (
 func TestLoggerFiles(t *testing.T) {
 	specialTest = true
 	tmp := oldLogDirPath
-	oldLogDirPath = "/src/bitbucket.org/lewington/autoroller/old-log-tst/"
+	oldLogDirPath = "./old-log-tst/"
 	refreshDir(oldLogDir())
 
 	oldLogFiles, err := ioutil.ReadDir(oldLogDir())

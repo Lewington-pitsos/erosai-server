@@ -3,7 +3,6 @@ package lg
 import (
 	"flag"
 	"fmt"
-	"go/build"
 	"io/ioutil"
 	"os"
 	"os/exec"
@@ -84,7 +83,7 @@ func (l *Lggr) keepLogging() {
 }
 
 func (l *Lggr) dirName() string {
-	return build.Default.GOPATH + "/src/bitbucket.org/lewington/erosai-server/log/"
+	return "./log/"
 }
 
 func (l *Lggr) fileName() string {
@@ -167,6 +166,11 @@ func NewLggr() *Lggr {
 		0,
 		nil,
 	}
+
+	// Ensure directories exist
+	os.MkdirAll(l.dirName(), 0755)
+	os.MkdirAll(oldLogDir(), 0755)
+
 	if flag.Lookup("test.v") == nil || specialTest == true {
 		os.Rename(l.dirName()+"main-1.log", oldLogDir()+fmt.Sprintf("%v.log", time.Now().Format("02-01-2006_15:04:05.000")))
 		oldLogFiles, err := ioutil.ReadDir(oldLogDir())
@@ -191,5 +195,5 @@ func NewLggr() *Lggr {
 var L *Lggr = NewLggr()
 
 func oldLogDir() string {
-	return build.Default.GOPATH + oldLogDirPath
+	return oldLogDirPath
 }

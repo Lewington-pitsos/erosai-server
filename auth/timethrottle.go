@@ -3,7 +3,7 @@ package auth
 import (
 	"time"
 
-	"bitbucket.org/lewington/autoroller/assist"
+	"bitbucket.org/lewington/erosai-server/assist"
 )
 
 // TimeThrottle allows a certain number of incorrect logins
